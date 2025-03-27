@@ -17,9 +17,9 @@ void mix_with_random_bytes(FILE *input, FILE *output, FILE *key_output) {
             buffer[i] ^= randomByte;
             fprintf(key_output, "%02x", randomByte);
         }
+        fwrite(buffer, 1, bytesRead, output);
     }
     fprintf(key_output, "\n");
-    fwrite(buffer, 1, bytesRead, output);
 }
 
 int main(int argc, char *argv[]) {
@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    FILE *key_output = fopen(argv[1], "a");
+    FILE *key_output = fopen(argv[1], "w");
     if (key_output == NULL) {
         perror("Failed to open key output file");
         return 1;
